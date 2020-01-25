@@ -12,3 +12,4 @@ class BerrybenkaCrawlingItem(scrapy.Item):
     title = scrapy.Field()
     price = scrapy.Field()
     source_image = scrapy.Field()
+    link_url = scrapy.Field()

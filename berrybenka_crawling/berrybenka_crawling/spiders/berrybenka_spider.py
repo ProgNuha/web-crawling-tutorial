@@ -14,12 +14,14 @@ class BerryBenkaSpider(scrapy.Spider):
         products = response.css('#li-catalog')
 
         for product in products:
-            title = product.css('div.detail-left').css('h1::text').get()
+            title = product.css('h1::text').get()
             price = product.css('.discount::text').get()
             source_image = product.css('.catalog-image').css('img::attr(src)').get()
+            link_url = product.css('a::attr(href)').get()
             
             items['title'] = title
             items['price'] = price
             items['source_image'] = source_image
+            items['link_url'] = link_url
 
             yield items
