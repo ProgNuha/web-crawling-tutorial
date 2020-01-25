@@ -8,4 +8,6 @@
 
 class Exercise1Pipeline(object):
     def process_item(self, item, spider):
+
+        print("Pipeline : " + item['title'][2])
         return item
