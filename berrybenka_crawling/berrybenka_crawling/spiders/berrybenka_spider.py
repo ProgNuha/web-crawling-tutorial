@@ -1,4 +1,5 @@
 import scrapy
+from ..items import BerrybenkaCrawlingItem
 
 class BerryBenkaSpider(scrapy.Spider):
     name = 'products'
@@ -7,7 +8,18 @@ class BerryBenkaSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        product_name = response.css('div.detail-left').css('h1::text').getall()
-        # product_price = response.css('.discount::text').getall()
-        # product_image = response.css('.catalog-image').css('img::attr(src)').getall()
-        yield {'product': product_name}
+
+        items = BerrybenkaCrawlingItem()
+
+        products = response.css('#li-catalog')
+
+        for product in products:
+            title = product.css('div.detail-left').css('h1::text').get()
+            price = product.css('.discount::text').get()
+            source_image = product.css('.catalog-image').css('img::attr(src)').get()
+            
+            items['title'] = title
+            items['price'] = price
+            items['source_image'] = source_image
+
+            yield items
